@@ -1,0 +1,119 @@
+{
+  "donnees": {
+    "moteurs_entrainement": 100,
+    "cycles_entrainement": 20631,
+    "moteurs_test": 100,
+    "capteurs_utilises": [
+      "s2",
+      "s3",
+      "s4",
+      "s7",
+      "s8",
+      "s9",
+      "s11",
+      "s12",
+      "s13",
+      "s14",
+      "s15",
+      "s17",
+      "s20",
+      "s21"
+    ],
+    "rul_plafond": 125
+  },
+  "regression": {
+    "modele_retenu": "LightGBM",
+    "resultats": [
+      {
+        "modele": "LightGBM",
+        "cv_rmse": 13.607,
+        "cv_mae": 9.41,
+        "test_rmse": 15.113,
+        "test_mae": 11.005,
+        "test_score_nasa": 384.868
+      },
+      {
+        "modele": "Forêt aléatoire",
+        "cv_rmse": 14.346,
+        "cv_mae": 9.974,
+        "test_rmse": 15.737,
+        "test_mae": 11.706,
+        "test_score_nasa": 381.882
+      },
+      {
+        "modele": "Ridge (+ variables temporelles)",
+        "cv_rmse": 15.795,
+        "cv_mae": 12.645,
+        "test_rmse": 17.201,
+        "test_mae": 13.976,
+        "test_score_nasa": 436.535
+      },
+      {
+        "modele": "Régression linéaire (capteurs bruts)",
+        "cv_rmse": 19.972,
+        "cv_mae": 16.098,
+        "test_rmse": 22.536,
+        "test_mae": 17.727,
+        "test_score_nasa": 1291.37
+      },
+      {
+        "modele": "Référence (RUL moyenne)",
+        "cv_rmse": 41.673,
+        "cv_mae": 36.965,
+        "test_rmse": 43.067,
+        "test_mae": 35.9,
+        "test_score_nasa": 33629.231
+      }
+    ],
+    "importance_capteurs": {
+      "s4 – Température sortie turbine BP (T50)": 1.378,
+      "s9 – Vitesse du cœur (Nc)": 0.803,
+      "s14 – Vitesse corrigée du cœur (NRc)": 0.756,
+      "s13 – Vitesse corrigée du fan (NRf)": 0.686,
+      "s15 – Taux de dilution (BPR)": 0.619,
+      "s2 – Température sortie compresseur BP (T24)": 0.469,
+      "s11 – Pression statique compresseur HP (Ps30)": 0.458,
+      "s12 – Rapport carburant / Ps30 (phi)": 0.425
+    }
+  },
+  "classification": {
+    "horizon_cycles": 30,
+    "approche_retenue": "Régression logistique",
+    "resultats_cv": [
+      {
+        "approche": "Régression logistique",
+        "cv_roc_auc": 0.9962,
+        "cv_pr_auc": 0.9799
+      },
+      {
+        "approche": "Classifieur dédié (LightGBM)",
+        "cv_roc_auc": 0.9961,
+        "cv_pr_auc": 0.9795
+      },
+      {
+        "approche": "Régression (LightGBM) seuillée",
+        "cv_roc_auc": 0.9954,
+        "cv_pr_auc": 0.9762
+      }
+    ],
+    "seuil": 0.1091,
+    "test": {
+      "pannes_reelles": 25,
+      "anticipees": 25,
+      "manquees": 0,
+      "fausses_alertes": 3,
+      "moteurs_sains_laisses": 72,
+      "roc_auc": 0.9978666666666667,
+      "pr_auc": 0.994114285714286
+    },
+    "couts_test": {
+      "Aucune alerte (on attend la panne)": 2500000,
+      "Révision de tous les moteurs": 1000000,
+      "Alerte du modèle": 280000
+    },
+    "hypotheses": {
+      "maintenance_preventive": 10000,
+      "panne": 100000
+    }
+  }
+}
